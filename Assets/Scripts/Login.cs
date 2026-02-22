@@ -14,6 +14,7 @@ public class Login : MonoBehaviour
 
     public string expectedUsername = "Rui"; // Expected username
     public string expectedPassword = "123456"; // Expected password
+    public string sceneToLoad = "CA4";   // Scene to load on successful login (set in inspector)
 
     // Called when the login button is clicked
     public void OnLoginButtonClicked()
@@ -25,7 +26,7 @@ public class Login : MonoBehaviour
         if (enteredUsername == expectedUsername && enteredPassword == expectedPassword)
         {
             feedbackText.text = "Login successful!";
-            SceneManager.LoadScene("Test");
+            SceneManager.LoadScene(sceneToLoad);
         }
         else
         {
