@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // Added this namespace
 
 /// <summary>
 /// This script manages the tutorial flow, including activating trigger zones in order, enabling teleport areas, and showing a congratulations message at the end.
@@ -23,6 +24,10 @@ public class TutorialManager : MonoBehaviour
     public Material activeMaterial;
     public Material inactiveMaterial;
     public Material completedMaterial;
+    
+    [Header("Scene Management")] // Added this header
+    [SerializeField] private string nextSceneName = "CA5"; // Next scene name
+    [SerializeField] private float loadSceneDelay = 5f; // Delay before loading next scene
     
     private int currentZoneIndex = 1; // Tracks which zone should be triggered next
     private bool triggersCompleted = false;
@@ -212,6 +217,9 @@ public class TutorialManager : MonoBehaviour
             
             // Show congratulations
             ShowCongrats();
+            
+            // Load next scene after delay
+            Invoke(nameof(LoadNextScene), loadSceneDelay);
         }
     }
     
@@ -240,5 +248,17 @@ public class TutorialManager : MonoBehaviour
         {
             congratsCanvas.SetActive(false);
         }
+        
+        // Cancel scene loading if user closes the message
+        CancelInvoke(nameof(LoadNextScene));
+    }
+    
+    /// <summary>
+    /// Loads the next scene (CA5)
+    /// </summary>
+    private void LoadNextScene()
+    {
+        Debug.Log("Loading next scene: " + nextSceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 }
